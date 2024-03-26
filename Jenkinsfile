@@ -32,7 +32,7 @@ pipeline {
         stage('Build React App') {
             steps {
                 // Build React app
-                sh 'cd client && npm install && npm run build && cd build && pwd'
+                sh 'npm install && npm run build'
             }
         }
         
