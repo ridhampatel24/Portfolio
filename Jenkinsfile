@@ -16,7 +16,7 @@ pipeline {
         nodejs "nodeJS"
     }
     environment {
-        EC2_HOST = '3.90.250.252'
+        EC2_HOST = '50.17.55.237'
         EC2_USER = 'ubuntu'
         PRIVATE_KEY = '/var/lib/jenkins/portfolio-dev.pem'
     }
