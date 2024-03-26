@@ -12,7 +12,7 @@ pipeline {
     }
     environment {
         // Define AWS EC2 details
-        EC2_HOST = '54.234.146.199'
+        EC2_HOST = '3.90.250.252'
         EC2_USER = 'ubuntu'
         PRIVATE_KEY = '/var/lib/jenkins/portfolio-dev.pem'
         
