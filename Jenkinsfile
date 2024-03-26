@@ -50,7 +50,7 @@ pipeline {
                     sh './upload.sh' // Execute upload script
                 }
             }
-        }
+        }   
         
     }
     post {
