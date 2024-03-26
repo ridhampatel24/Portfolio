@@ -8,11 +8,11 @@
 pipeline {
     agent any
     tools {
-        nodejs "Node-21"
+        nodejs "nodeJS"
     }
     environment {
         // Define AWS EC2 details
-        EC2_HOST = '65.0.87.100'
+        EC2_HOST = '54.209.178.188'
         EC2_USER = 'ubuntu'
         PRIVATE_KEY = '/var/lib/jenkins/portfolio-dev.pem'
         
@@ -40,7 +40,7 @@ pipeline {
             steps {
                 script {
                       // Optional: Use rsyn to copy the entire folder to the EC2 instance.
-                    sh "rsync -avrx -e 'ssh -i ${PRIVATE_KEY} -o StrictHostKeyChecking=no' --delete /var/lib/jenkins/workspace/React-Node-Docker-Project-CICD-JENKINS-EC2-PUBLIC/build ${EC2_USER}@${EC2_HOST}:/var/www"                  
+                    sh "rsync -avrx -e 'ssh -i ${PRIVATE_KEY} -o StrictHostKeyChecking=no' --delete /var/lib/jenkins/workspace/portfolio_ec2/build ${EC2_USER}@${EC2_HOST}:/var/www"                  
                 }
             }
         }
