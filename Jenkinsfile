@@ -40,7 +40,7 @@ pipeline {
             steps {
                 script {
                       // Optional: Use rsyn to copy the entire folder to the EC2 instance.
-                    sh "rsync -avrx -e 'ssh -i ${PRIVATE_KEY} -o StrictHostKeyChecking=no' --delete /var/lib/jenkins/workspace/portfolio_ec2/build ${EC2_USER}@${EC2_HOST}:/var/www"                  
+                    sh "rsync -avrx -e 'ssh -i ${PRIVATE_KEY} -o StrictHostKeyChecking=no' --delete /var/lib/jenkins/workspace/portfolio_ec2/build/ ${EC2_USER}@${EC2_HOST}:/var/www/html"                  
                 }
             }
         }
