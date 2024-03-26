@@ -5,6 +5,11 @@
 
 // Required Plugins: SSH Agent plugin, node js, Docker pipeline
 // Create Credentials: dockerhub, github
+def COLOR_MAP = [
+    'SUCCESS': 'good',
+    'FAILURE': 'danger',
+]
+
 pipeline {
     agent any
     tools {
@@ -49,6 +54,9 @@ pipeline {
     post {
         success {
             echo 'Pipeline succeeded. React app deployed to AWS EC2.'
+            slackSend channel: '#jenkinscicd',
+            color: COLOR_MAP[currentBuild.currentResult],
+            message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"
         }
         failure {
             echo 'Pipeline failed. Check the logs for errors.'
