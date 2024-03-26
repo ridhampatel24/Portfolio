@@ -32,7 +32,7 @@ pipeline {
         stage('Build React App') {
             steps {
                 // Build React app
-                sh 'npm install && npm run build    '
+                sh 'npm install && npm run build'
             }
         }
         
