@@ -52,7 +52,7 @@ pipeline {
         
     }
     post {
-        success {
+        always {
             echo 'Pipeline succeeded. React app deployed to AWS EC2.'
             slackSend channel: '#jenkinscicd',
             color: COLOR_MAP[currentBuild.currentResult],
