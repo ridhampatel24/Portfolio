@@ -16,18 +16,14 @@ pipeline {
         nodejs "nodeJS"
     }
     environment {
-        // Define AWS EC2 details
         EC2_HOST = '3.90.250.252'
         EC2_USER = 'ubuntu'
         PRIVATE_KEY = '/var/lib/jenkins/portfolio-dev.pem'
-        
-        // Define Docker Hub details
     }
 
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the source code from your Git repository
                script {
                     git branch: 'main', url: 'git@github.com:ridhampatel24/Portfolio.git', timeout: 30
                 }
@@ -36,7 +32,6 @@ pipeline {
 
         stage('Build React App') {
             steps {
-                // Build React app
                 sh 'npm install && npm run build'
             }
         }
@@ -44,7 +39,6 @@ pipeline {
         stage('Transfer Frotend Build to EC2') {
             steps {
                 script {
-                      // Optional: Use rsyn to copy the entire folder to the EC2 instance.
                     sh "rsync -avrx -e 'ssh -i ${PRIVATE_KEY} -o StrictHostKeyChecking=no' --delete /var/lib/jenkins/workspace/portfolio_ec2/build/ ${EC2_USER}@${EC2_HOST}:/var/www/html"                  
                 }
             }
@@ -57,9 +51,6 @@ pipeline {
             slackSend channel: '#jenkinscicd',
             color: COLOR_MAP[currentBuild.currentResult],
             message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"
-        }
-        failure {
-            echo 'Pipeline failed. Check the logs for errors.'
         }
     }
 }
