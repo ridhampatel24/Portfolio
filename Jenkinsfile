@@ -15,9 +15,11 @@ pipeline {
         nodejs "nodeJS"
     }
     environment {
-        EC2_HOST = '34.203.31.36'
-        EC2_USER = 'ubuntu'
         PRIVATE_KEY = '/var/lib/jenkins/portfolio-dev.pem'
+        SSH_KEY=/var/lib/jenkins/portfolio-dev.pem
+        EC2_USER=ubuntu
+        EC2_HOST=18.208.157.79
+        REMOTE_DIR=/var/www/html
     }
 
     stages {
@@ -35,13 +37,14 @@ pipeline {
             }
         }
         
-        // stage('Transfer Frotend Build to EC2') {
-        //     steps {
-        //         script {
-        //             sh "rsync -avrx -e 'ssh -i ${PRIVATE_KEY} -o StrictHostKeyChecking=no' --delete /var/lib/jenkins/workspace/portfolio_ec2/build/ ${EC2_USER}@${EC2_HOST}:/var/www/html"                  
-        //         }
-        //     }
-        // }
+        stage('Transfer Frotend Build to EC2') {
+            steps {
+                script {
+                    //sh "rsync -avrx -e 'ssh -i ${PRIVATE_KEY} -o StrictHostKeyChecking=no' --delete /var/lib/jenkins/workspace/portfolio_ec2/build/ ${EC2_USER}@${EC2_HOST}:/var/www/html"   
+                    sh 'scp -i ${SSH_KEY} -r build/* ${EC2_USER}@${EC2_HOST}:${REMOTE_DIR}'               
+                }
+            }
+        }
 
         stage('Upload to EC2') {
             steps {
