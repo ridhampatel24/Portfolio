@@ -37,14 +37,18 @@ pipeline {
             }
         }
 
-        // stage('Upload to EC2') {
-        //     steps {
-        //         script {
-        //             sh 'chmod +x upload.sh' // Ensure upload script is executable
-        //             sh './upload.sh' // Execute upload script
-        //         }
-        //     }
-        // }   
+        stage('Reload nginx') {
+            steps {
+                script {
+                    def commands = """
+                        sudo systemctl reload nginx
+                    """
+                    sshagent(['ec2-ridham']) {
+                        sh "ssh -o StrictHostKeyChecking=no -i ${PRIVATE_KEY} ${EC2_USER}@${EC2_HOST} '${commands}'"
+                    }
+                }
+            }
+        }   
         
     }
 }
