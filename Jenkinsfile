@@ -11,8 +11,8 @@ pipeline {
 
     environment {
         PRIVATE_KEY = '/var/lib/jenkins/portfolio-dev.pem'
-        EC2_USER=ubuntu
-        EC2_HOST=13.201.61.108
+        EC2_USER = 'ubuntu'
+        EC2_HOST = 13.201.61.108
     }
 
     stages {
