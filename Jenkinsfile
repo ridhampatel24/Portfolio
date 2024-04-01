@@ -9,6 +9,12 @@ pipeline {
         nodejs "Node-21"
     }
 
+    environment {
+        PRIVATE_KEY = '/var/lib/jenkins/portfolio-dev.pem'
+        EC2_USER=ubuntu
+        EC2_HOST=13.201.61.108
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -23,14 +29,13 @@ pipeline {
                 sh 'npm install && npm run build'
             }
         }
-        // stage('Transfer Frotend Build to EC2') {
-        //     steps {
-        //         script {
-        //             sh "rsync -avrx -e 'ssh -i ${PRIVATE_KEY} -o StrictHostKeyChecking=no' --delete /var/lib/jenkins/workspace/portfolio_ec2/build/ ${EC2_USER}@${EC2_HOST}:/var/www/html/ridhampatel.tech"   
-        //             //sh 'scp -i ${SSH_KEY} -r build/* ${EC2_USER}@${EC2_HOST}:${REMOTE_DIR}'               
-        //         }
-        //     }
-        // }
+        stage('Transfer Frotend Build to EC2') {
+            steps {
+                script {
+                    sh "rsync -avrx -e 'ssh -i ${PRIVATE_KEY} -o StrictHostKeyChecking=no' --delete /var/lib/jenkins/workspace/ridhampatel.tech_prod/build/ ${EC2_USER}@${EC2_HOST}:/var/www/html/ridhampatel.tech"
+                }
+            }
+        }
 
         // stage('Upload to EC2') {
         //     steps {
