@@ -10,7 +10,7 @@ pipeline {
     }
 
     environment {
-        PRIVATE_KEY = '/var/lib/jenkins/nginx-keypair.pem'
+        PRIVATE_KEY = '/var/lib/jenkins/ridham-ngnix-keypair.pem'
         EC2_USER = 'ubuntu'
         EC2_HOST = '3.110.160.244'
     }
