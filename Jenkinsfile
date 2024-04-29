@@ -12,7 +12,7 @@ pipeline {
     environment {
         PRIVATE_KEY = '/var/lib/jenkins/ridham-ngnix-keypair.pem'
         EC2_USER = 'ubuntu'
-        EC2_HOST = '13.232.7.145'
+        EC2_HOST = '15.206.123.104'
     }
 
     stages {
@@ -29,10 +29,10 @@ pipeline {
                 sh 'npm install && npm run build'
             }
         }
-        stage('Transfer Frotend Build to EC2') {
+        stage('Transfer Frontend Build to EC2') {
             steps {
                 script {
-                    sh "rsync -avrx -e 'ssh -i ${PRIVATE_KEY} -o StrictHostKeyChecking=no' --delete /var/lib/jenkins/workspace/ridhampatel.tech_prod/build/ ${EC2_USER}@${EC2_HOST}:/var/www/html/ridhampatel.tech"
+                    sh "rsync -avrx -e 'ssh -i ${PRIVATE_KEY} -o StrictHostKeyChecking=no' --delete /var/lib/jenkins/workspace/ridhampatel.tech_prod/build/ ${EC2_USER}@${EC2_HOST}:/var/www/html/app"
                 }
             }
         }
